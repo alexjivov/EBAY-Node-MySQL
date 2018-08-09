@@ -12,7 +12,7 @@ var connection = mysql.createConnection({
   
     // Your password
     password: "password",
-    database: "unknownDBsoFar"
+    database: "productsDB"
   });
   
   connection.connect(function(err) {
@@ -29,10 +29,25 @@ inquirer.prompt([
         message: "Would you like to BID or POST an item?"
     }
 ]).then(function(response) {
-    if (response === "BID") 
-    //{run bid function }
-    console.log("you did somethign right"); 
+    console.log(response); 
+    if (response.bid === "BID") {
+    displayInfo(); 
+     } else { 
+        console.log("We dont have this function yet... stay tuned")
+     }
 
 })
 
+
+function displayInfo() {
+    console.log("DISPLAYING INFO\n")
+    var query = connection.query("SELECT * FROM products", function(err, res) {
+        if (err) throw (err) 
+        for (var i = 0; i < res.length; i++) 
+        { 
+            console.log("CURRENT ITEM: " + res[i].name + " CURRENT NAME: " + res[i].current_bid); 
+        }
+    });
+
+}; 
 
